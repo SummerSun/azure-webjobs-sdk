@@ -222,7 +222,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings
             if (!template.ParameterNames.Any())
             {
                 // No { } tokens, bind eagerly up front. 
-                RunValidateAttributes(originalValue, propInfo);
+                RunValidateAttributes(resolvedValue, propInfo);
             }
 
             IResolutionPolicy policy = GetPolicy(attr.ResolutionPolicyType, propInfo);
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.WebJobs.Host.Bindings
         {
             if (bindingData == null)
             {
-                RunValidateAttributes(template?.Pattern, prop);
+                // Skip validation if no binding data provided. We can't do the { } substitutions. 
                 return template?.Pattern;
             }
 
